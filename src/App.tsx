@@ -1,12 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useAction } from './app-hooks/useAction';
+import { useTypedSelector } from './app-hooks/useTypedSelector';
 import './App.css';
 
 function App() {
+  const categoryState = useTypedSelector((state)=>  state.categoryReducer);
+  const {GetCategories} = useAction();
+  useEffect(()=>{
+    async function init() {
+      await GetCategories();
+    }
+
+    init();
+  },[]);
+
+  useEffect(()=>{
+    console.log(categoryState);
+  },[categoryState])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
